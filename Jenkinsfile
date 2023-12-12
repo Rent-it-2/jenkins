@@ -8,6 +8,8 @@ pipeline {
                     echo "Multiline shell steps works too"
                     ls -lah
                 '''
+                sh "echo 'Starting with Building JAR with Maven'"
+                sh "mvn clean package -Dmaven.test.skip=true"
             }
         }
         stage('Deploy') {
