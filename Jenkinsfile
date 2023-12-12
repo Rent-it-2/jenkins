@@ -1,9 +1,5 @@
 pipeline {
     agent any
-     environment {
-        GIT_COMMITTER_NAME = 'icarodante'
-        GIT_COMMITTER_EMAIL = 'icaro.menezes@sptech.school'
-    }
     
     stages {
         stage('Build') {
@@ -13,10 +9,12 @@ pipeline {
                     echo "Multiline shell steps works too"
                     ls -lah
                 '''
+                script{
                 sh 'echo "build executado" > package-release'
                 // Adiciona todos os arquivos modificados ao commit
                     sh 'git add .'
                 sh 'git -c "user.name=$GIT_COMMITTER_NAME" -c "user.email=$GIT_COMMITTER_EMAIL" commit -m "Atualização automática pelo Jenkins"'
+                }
             }
         }
         stage('Deploy') {
