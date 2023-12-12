@@ -1,5 +1,10 @@
 pipeline {
     agent any
+     environment {
+        GIT_COMMITTER_NAME = 'icarodante'
+        GIT_COMMITTER_EMAIL = 'icaro.menezes@sptech.school'
+    }
+    
     stages {
         stage('Build') {
             steps {
@@ -9,6 +14,7 @@ pipeline {
                     ls -lah
                 '''
                 sh 'echo "build executado" > package-release'
+                sh 'git -c "user.name=$GIT_COMMITTER_NAME" -c "user.email=$GIT_COMMITTER_EMAIL" commit -m "Atualização automática pelo Jenkins"'
             }
         }
         stage('Deploy') {
