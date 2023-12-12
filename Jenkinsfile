@@ -13,8 +13,6 @@ pipeline {
         stage('Deploy - Fase 2') {
             steps {
                 sh 'echo "Fazendo deploy automatico"'
-                }
-                }
             }
         }
         stage('Testes - Fase 3') {
