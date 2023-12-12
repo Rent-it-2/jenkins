@@ -22,6 +22,7 @@ pipeline {
                     
                     // Empurra as alterações para o repositório remoto (neste exemplo, a branch é 'main')
                     sh 'git push origin main'
+                }
             }
         }
         stage('Testes') {
