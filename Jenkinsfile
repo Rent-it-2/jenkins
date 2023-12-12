@@ -24,7 +24,7 @@ pipeline {
                 sh 'echo "Fazendo deploy automatico"'
                 script {
                     // Empurra as alterações para o repositório remoto (neste exemplo, a branch é 'main')
-                    git push -u origin main
+                    sh 'git push -u origin main'
 
                    // sh 'git push origin main'
                 }
