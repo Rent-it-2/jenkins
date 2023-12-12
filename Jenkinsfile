@@ -13,6 +13,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'echo "Fazendo deploy automatico"'
+                script {
+                    // Adiciona todos os arquivos modificados ao commit
+                    sh 'git add .'
+                    
+                    // Realiza o commit com uma mensagem específica
+                    sh 'git commit -m "Atualização automática pelo Jenkins"'
+                    
+                    // Empurra as alterações para o repositório remoto (neste exemplo, a branch é 'main')
+                    sh 'git push origin main'
             }
         }
         stage('Testes') {
