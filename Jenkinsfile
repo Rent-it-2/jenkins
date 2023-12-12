@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Build - Fase 1') {
+        stage('Build') {
             steps {
                 sh 'echo "Hello World"'
                 sh '''
@@ -10,12 +10,12 @@ pipeline {
                 '''
             }
         }
-        stage('Deploy - Fase 2') {
+        stage('Deploy') {
             steps {
                 sh 'echo "Fazendo deploy automatico"'
             }
         }
-        stage('Testes - Fase 3') {
+        stage('Testes') {
             steps {
                 sh 'echo "Sucess!"'
             }
