@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install JMeter') {
+            steps {
+                script {
+                    // Defina o caminho para instalar o JMeter
+                    def jmeterInstallDir = '/jmeter'
+
+                    // Verifique se o JMeter já está instalado
+                    def isJMeterInstalled = fileExists("${jmeterInstallDir}/bin/jmeter")
+
+                    if (!isJMeterInstalled) {
+                        // Baixe e extraia o JMeter se não estiver instalado
+                        sh "mkdir -p ${jmeterInstallDir}"
+                        sh "curl -L https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.1.tgz | tar xvz -C ${jmeterInstallDir} --strip-components 1"
+                    }
+
+                    // Adicione o JMeter ao PATH
+                    withEnv(["PATH+JENKINS=${jmeterInstallDir}/bin"]) {
+                        sh 'echo "PATH=${PATH}"'
+                    }
+                }
+            }
+        }
+
+        stage('Run JMeter Tests') {
+            steps {
+                script {
+                    // Caminho para o arquivo JMX dos testes do JMeter
+                    def jmeterTestFile = '/jmeter/teste.jmx'
+
+                    // Execute os testes JMeter
+                    sh "jmeter -n -t ${jmeterTestFile} -l results.jtl"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts 'results.jtl'
+            junit 'results.jtl'
+        }
+    }
+}
+
+def fileExists(filePath) {
+    try {
+        return script { return file(filePath).isFile() }
+    } catch (Exception e) {
+        return false
+    }
+}
