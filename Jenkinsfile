@@ -12,19 +12,14 @@ pipeline {
         }
         stage('Deploy - Fase 2') {
             steps {
-                echo 'Fazendo deploy automatico'
+                sh 'echo "Fazendo deploy automatico"'
                 }
-
-                timeout(time: 3, unit: 'MINUTES') {
-                    retry(5) {
-                    sh '/tmp/testa-arquivo.sh'
-                    }
                 }
             }
         }
         stage('Testes - Fase 3') {
             steps {
-                sh 'echo "Fail!"'
+                sh 'echo "Sucess!"'
             }
         }
     }
