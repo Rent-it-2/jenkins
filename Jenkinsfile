@@ -12,9 +12,7 @@ pipeline {
         }
         stage('Deploy - Fase 2') {
             steps {
-                retry(3) {
-                    sh '/tmp/exemplo-deploy.sh'
-                    sh 'date'
+                echo 'Fazendo deploy automatico'
                 }
 
                 timeout(time: 3, unit: 'MINUTES') {
